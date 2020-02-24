@@ -1,6 +1,6 @@
 package project.environment;
 
-import java.io.IOException;
+import java.awt.Point;
 import java.util.ArrayList;
 
 import utils.FileUtils;
@@ -27,10 +27,14 @@ public class MarsMap {
 			
 			String[] csvValues = FileUtils.readCsv(filePath);
 			int[] dims = this.getDimensions(csvValues[0]);
+			int width = dims[1];
+			int height = dims[0];
 			
-			for(int y = 0; y < dims[1]; y++) {
-				for(int x = 0; x < dims[0]; x++) {
-					this.addTile(x, y);
+			int realHeight = (csvValues.length-1)/width;
+			
+			for(int y = 0; y < realHeight; y++) {
+				for(int x = 0; x < width; x++) {
+					this.addTile(x, y, csvValues[y*width+x-1]);
 				}
 			}
 			
@@ -39,8 +43,14 @@ public class MarsMap {
 		}
 	}
 	
-	private void addTile(int x, int y) {
-		this.tiles.get(index)
+	private void addTile(int x, int y, String raw) {
+		while(this.tiles.size() < y) {
+			this.tiles.add(new ArrayList<MarsTile>());
+		}
+		
+		Point position = new Point(x,y);
+		
+		this.tiles.get(y).add(new MarsTile(position))
 	}
 	
 	private int[] getDimensions(String rawValues) throws NumberFormatException{
