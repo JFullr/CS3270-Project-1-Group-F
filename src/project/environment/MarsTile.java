@@ -4,6 +4,8 @@ import java.awt.Point;
 
 public class MarsTile {
 	
+	public static final MarsTile ILLEGAL_TILE = new MarsTile(null,Double.NEGATIVE_INFINITY);
+	
 	private double weight;
 	
 	private Point position;

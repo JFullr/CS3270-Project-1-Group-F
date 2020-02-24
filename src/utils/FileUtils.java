@@ -47,14 +47,14 @@ public class FileUtils {
 		
 		String raw = new String(FileUtils.readFile(filePath));
 		raw = FileUtils.condenseNewLines(raw);
-		raw.replace("\n", ",");
+		raw = raw.replace("\n", ",");
 		
 		return raw.split(",");
 		
 	}
 	
 	private static String condenseNewLines(String value) {
-		return value.replaceAll("\r", "\n").replaceAll("\n\n", "\n");
+		return value.replace("\r", "\n").replace("\n\n", "\n");
 	}
 
 }
