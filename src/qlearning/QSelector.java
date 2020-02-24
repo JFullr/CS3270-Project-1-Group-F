@@ -1,5 +1,6 @@
 package qlearning;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class QSelector {
@@ -26,10 +27,21 @@ public class QSelector {
 	}
 	
 	
-	public QValue select(Iterable<QValue> values) {
+	public QValue select(Iterable<QValue> values, double currentWeight) {
+		
+		class Tuple{
+			public QValue state;
+			public double value;
+			public Tuple(QValue state,double value) {
+				this.state = state;
+				this.value = value;
+			}
+		}
+		
+		ArrayList<Tuple> possibleValues = new ArrayList<Tuple>();
 		
 		for(QValue value : values) {
-			
+			double
 		}
 		
 		return null;
@@ -63,6 +75,14 @@ public class QSelector {
 	
 	public QSelector makeCopy() {
 		return new QSelector(this.alpha,this.gamma,this.epsilon);
+	}
+	
+	
+	
+	///TODO max state value
+	private double calculate(double stateWeight, double currentWeight) {
+		return (1-this.alpha)*currentWeight 
+				+ this.alpha*(stateWeight + this.epsilon * new Double(0));
 	}
 
 }
