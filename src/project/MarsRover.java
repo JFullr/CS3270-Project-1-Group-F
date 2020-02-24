@@ -12,6 +12,8 @@ public class MarsRover {
 		
 	}
 	
+	
+	
 	public void traverse() {
 		//
 	}

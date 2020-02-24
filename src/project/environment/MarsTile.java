@@ -2,7 +2,9 @@ package project.environment;
 
 import java.awt.Point;
 
-public class MarsTile {
+import qlearning.QValue;
+
+public class MarsTile implements QValue {
 	
 	public static final MarsTile ILLEGAL_TILE = new MarsTile(null,Double.NEGATIVE_INFINITY);
 	
