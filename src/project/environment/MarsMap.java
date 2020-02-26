@@ -44,8 +44,8 @@ public class MarsMap {
 	 *
 	 * @return the map width
 	 */
-	public int getMapWidth() {
-		return mapWidth;
+	public int getWidth() {
+		return this.mapWidth;
 	}
 
 	/**
@@ -53,8 +53,8 @@ public class MarsMap {
 	 *
 	 * @return the map height
 	 */
-	public int getMapHeight() {
-		return mapHeight;
+	public int getHeight() {
+		return this.mapHeight;
 	}
 
 	/**

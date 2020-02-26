@@ -10,38 +10,40 @@ public class QSelector {
 	private double alpha;
 	
 	private Random rand;
+	private QMemory memory;
 	
-	public QSelector() {
-		this.init(.5, .9, .1);
+	public QSelector(QMemory memory) {
+		this.init(.5, .9, .1, memory);
 	}
 	
-	public QSelector(double alpha, double gamma, double epsilon) {
-		this.init(alpha, gamma, epsilon);
+	public QSelector(double alpha, double gamma, double epsilon, QMemory memory) {
+		this.init(alpha, gamma, epsilon, memory);
 	}
 	
-	private void init(double alpha, double gamma, double epsilon) {
+	private void init(double alpha, double gamma, double epsilon, QMemory memory) {
 		this.gamma = gamma;
 		this.epsilon = epsilon;
 		this.alpha = alpha;
 		this.rand = new Random();
+		this.memory = memory;
 	}
 	
 	
-	public QValue select(Iterable<QValue> values, double currentWeight) {
+	public QValue select(Iterable<QValue> nextStates, double currentWeight) {
 		
 		class Tuple{
 			public QValue state;
-			public double value;
-			public Tuple(QValue state,double value) {
+			public double weight;
+			public Tuple(QValue state,double weight) {
 				this.state = state;
-				this.value = value;
+				this.weight = weight;
 			}
 		}
 		
 		ArrayList<Tuple> possibleValues = new ArrayList<Tuple>();
 		
-		for(QValue value : values) {
-			double
+		for(QValue value : nextStates) {
+			//TODO calculate values -- put values into tuple list
 		}
 		
 		return null;
@@ -74,15 +76,16 @@ public class QSelector {
 	}
 	
 	public QSelector makeCopy() {
-		return new QSelector(this.alpha,this.gamma,this.epsilon);
+		return new QSelector(this.alpha,this.gamma,this.epsilon, this.memory);
 	}
 	
 	
 	
 	///TODO max state value
-	private double calculate(double stateWeight, double currentWeight) {
-		return (1-this.alpha)*currentWeight 
-				+ this.alpha*(stateWeight + this.epsilon * new Double(0));
+	private double calculate(double memoryWeight, double mapStateWeight, double currentTravelWeight) {
+		return (1-this.alpha)*mapStateWeight
+				+ this.alpha*
+					(currentTravelWeight + this.epsilon * memoryWeight);
 	}
 
 }

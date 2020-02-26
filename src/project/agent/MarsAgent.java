@@ -5,18 +5,22 @@ import java.util.ArrayList;
 
 import project.environment.MarsMap;
 import project.environment.MarsTile;
+import qlearning.QMemory;
 import qlearning.QSelector;
 
 public class MarsAgent {
 	
 	private ArrayList<MarsTile> traversed;
 	private MarsMap map;
+	
 	private QSelector selector;
+	private QMemory memory;
 	
 	public MarsAgent(MarsMap map) {
 		this.traversed = new ArrayList<MarsTile>();
 		this.map = map;
-		this.selector = new QSelector();
+		this.memory = new QMemory(this.map.getWidth(), this.map.getHeight());
+		this.selector = new QSelector(this.memory);
 	}
 	
 	public ArrayList<MarsTile> getPath(){
