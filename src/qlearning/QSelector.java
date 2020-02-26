@@ -41,6 +41,7 @@ public class QSelector {
 		}
 		
 		ArrayList<Tuple> possibleValues = new ArrayList<Tuple>();
+		//epsilon is exploration probability
 		
 		for(QValue value : nextStates) {
 			//TODO calculate values -- put values into tuple list
@@ -85,7 +86,7 @@ public class QSelector {
 	private double calculate(double memoryWeight, double mapStateWeight, double currentTravelWeight) {
 		return (1-this.alpha)*mapStateWeight
 				+ this.alpha*
-					(currentTravelWeight + this.epsilon * memoryWeight);
+					(currentTravelWeight + this.gamma * memoryWeight);
 	}
 
 }
