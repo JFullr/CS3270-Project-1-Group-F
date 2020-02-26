@@ -41,11 +41,15 @@ public class QSelector {
 		}
 		
 		ArrayList<Tuple> possibleValues = new ArrayList<Tuple>();
-		//epsilon is exploration probability
 		
 		for(QValue value : nextStates) {
-			//TODO calculate values -- put values into tuple list
+			double calc = 
+				this.calculate(this.memory.getWeight(value.getPosition()), value.getWeight(), currentWeight);
+			possibleValues.add(new Tuple(value,calc));
 		}
+		
+		//epsilon is exploration probability
+		//TODO explore
 		
 		return null;
 		
