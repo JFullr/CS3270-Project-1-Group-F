@@ -43,29 +43,44 @@ public class QSelector {
 		ArrayList<Tuple> possibleValues = new ArrayList<Tuple>();
 		
 		for(QValue value : nextStates) {
-			double calc = 
-				this.calculate(this.memory.getWeight(value.getPosition()), value.getWeight(), currentWeight);
-			possibleValues.add(new Tuple(value,calc));
+			if(value.getPosition() != null) {
+				double calc = 
+					this.calculate(this.memory.getWeight(value.getPosition()), value.getWeight(), currentWeight);
+				possibleValues.add(new Tuple(value,calc));
+			}
 		}
 		
-		//no states given
+		//no states given, or all illegal states
 		if(possibleValues.size() < 1) {
 			return null;
 		}
 		
 		
+		
 		//FIXME check for correctness
 		if(Math.random() <= this.epsilon) {
-			int tuple = (int)Math.round(Math.random()*possibleValues.size());
+			int tuple = (int)Math.floor(Math.random()*possibleValues.size());
+			this.memory.setWeight(possibleValues.get(tuple).state.getPosition(),possibleValues.get(tuple).weight);
 			return possibleValues.get(tuple).state;
 		}else {
+			
+			ArrayList<Tuple> bestValues = new ArrayList<Tuple>();
+			bestValues.add(possibleValues.get(0));
 			int best = 0;
+			
 			for(int i = 1; i < possibleValues.size(); i++) {
 				if(possibleValues.get(i).weight > possibleValues.get(best).weight) {
+					bestValues.clear();
 					best = i;
+					bestValues.add(possibleValues.get(i));
+				}else if(possibleValues.get(i).weight == possibleValues.get(best).weight) {
+					bestValues.add(possibleValues.get(i));
 				}
 			}
-			return possibleValues.get(best).state;
+			
+			int tuple = (int)Math.floor(Math.random()*bestValues.size());
+			this.memory.setWeight(possibleValues.get(tuple).state.getPosition(),possibleValues.get(tuple).weight);
+			return possibleValues.get(tuple).state;
 		}
 		
 	}

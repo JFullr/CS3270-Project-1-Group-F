@@ -39,10 +39,12 @@ public class MarsAgent {
 		QSelector sel = this.selector.makeCopy();
 		
 		///TODO implement loop and make sure it's correct
+		this.traversed.add(currentState);
 		do{
 			currentState = (MarsTile)sel.select(Arrays.asList(this.getNeighborStates(currentState)), currentWeight);
+			currentWeight = currentState.getWeight();
 			//.makeCopy()
-			this.traversed.add(null);
+			this.traversed.add(new MarsTile(currentState.getPosition(),currentState.getWeight()));
 		}while(currentWeight > END_STATE);
 		
 	}
