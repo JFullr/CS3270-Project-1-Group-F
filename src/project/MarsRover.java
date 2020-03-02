@@ -37,4 +37,12 @@ public class MarsRover {
 		this.agent.traverse();
 	}
 	
+	public String getLearnedMemory() {
+		return this.agent.getMemoryMap();
+	}
+	
+	public String getTrainingMap() {
+		return this.map.getDisplayMap();
+	}
+	
 }

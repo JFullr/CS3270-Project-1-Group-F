@@ -147,6 +147,28 @@ public class MarsMap {
 		}
 
 	}
+	
+	public String getDisplayMap() {
+		
+		StringBuilder build = new StringBuilder();
+		build.append("[");
+		
+		for (int y = 0; y < this.getHeight(); y++) {
+			for (int x = 0; x < this.getWidth(); x++) {
+				build.append(this.getState(x, y).getWeight());
+				if (x != this.getWidth() - 1) {
+					build.append(", ");
+				}
+			}
+			
+			if (y != this.getHeight() - 1) {
+				build.append("\n");
+			}
+		}
+		
+		
+		return build.toString();
+	}
 
 	/**
 	 * Gets the dimensions.
@@ -159,8 +181,8 @@ public class MarsMap {
 
 		String[] rawDims = rawValues.toLowerCase().split("x");
 
-		int width = Integer.parseInt(rawDims[0].trim());
-		int height = Integer.parseInt(rawDims[1].trim());
+		int width = Integer.parseInt(rawDims[1].trim());
+		int height = Integer.parseInt(rawDims[0].trim());
 
 		return new Dimension(width, height);
 	}

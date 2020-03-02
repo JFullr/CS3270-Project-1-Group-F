@@ -6,7 +6,7 @@ import qlearning.QValue;
 
 public class Main {
 	
-	public static final int TRANING_ROUNDS = 100000;
+	public static final int TRANING_ROUNDS = 10000;
 
 	public static void main(String[] args) {
 		
@@ -18,6 +18,10 @@ public class Main {
 		for(int i = start; i < paths.size(); i++) {
 			System.out.println(paths.get(i));
 		}
+		
+		System.out.println(rover.getLearnedMemory());
+		System.out.println();
+		System.out.println(rover.getTrainingMap());
 		
 	}
 
