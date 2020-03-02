@@ -44,13 +44,15 @@ public class MarsAgent {
 		/// TODO implement loop and make sure it's correct
 		this.traversed.add(currentState);
 		do {
-			currentWeight++;
+			//currentWeight++;
 			QTuple intermediateState = sel.select(Arrays.asList(this.getNeighborStates(currentState)), currentWeight);
 			currentState = (MarsTile) intermediateState.getState();
 			currentWeight = intermediateState.getWeight();
 			// .makeCopy()
-			this.traversed.add(new MarsTile(currentState.getPosition(), currentState.getWeight()));
+			
+			this.traversed.add(currentState);
 			mapState = this.memory.getWeight(currentState.getPosition());
+			
 		} while (mapState < SUCCESS_STATE && mapState > FAIL_STATE);
 
 		if (mapState <= FAIL_STATE) {

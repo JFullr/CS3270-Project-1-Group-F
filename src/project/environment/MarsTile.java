@@ -39,7 +39,7 @@ public class MarsTile implements QValue {
 	}
 	
 	public String toString(){
-		return "["+this.getPosition().x+", "+this.getPosition().y+"]: "+this.getWeight();
+		return "["+this.getPosition().y+", "+this.getPosition().x+"]: "+this.getWeight();
 	}
 	
 }
