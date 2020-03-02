@@ -54,6 +54,7 @@ public class QMemory {
 			}
 
 			public Point getPosition() { return null; }
+			public QValue makeCopy() { return null; }
 		};
 	}
 

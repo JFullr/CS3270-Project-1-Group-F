@@ -33,5 +33,9 @@ public class MarsTile implements QValue {
 	public void setWeight(double weight) {
 		this.weight = weight;
 	}
+
+	public QValue makeCopy() {
+		return new MarsTile(this.getPosition(), this.getWeight());
+	}
 	
 }

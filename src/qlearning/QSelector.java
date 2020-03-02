@@ -48,10 +48,25 @@ public class QSelector {
 			possibleValues.add(new Tuple(value,calc));
 		}
 		
-		//epsilon is exploration probability
-		//TODO explore
+		//no states given
+		if(possibleValues.size() < 1) {
+			return null;
+		}
 		
-		return null;
+		
+		//FIXME check for correctness
+		if(Math.random() <= this.epsilon) {
+			int tuple = (int)Math.round(Math.random()*possibleValues.size());
+			return possibleValues.get(tuple).state;
+		}else {
+			int best = 0;
+			for(int i = 1; i < possibleValues.size(); i++) {
+				if(possibleValues.get(i).weight > possibleValues.get(best).weight) {
+					best = i;
+				}
+			}
+			return possibleValues.get(best).state;
+		}
 		
 	}
 	

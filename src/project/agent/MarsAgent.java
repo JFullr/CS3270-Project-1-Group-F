@@ -2,6 +2,7 @@ package project.agent;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import project.environment.MarsMap;
 import project.environment.MarsTile;
@@ -9,6 +10,8 @@ import qlearning.QMemory;
 import qlearning.QSelector;
 
 public class MarsAgent {
+	
+	private static final double END_STATE = -150;
 	
 	private ArrayList<MarsTile> traversed;
 	private MarsMap map;
@@ -35,11 +38,12 @@ public class MarsAgent {
 		double currentWeight = 0;
 		QSelector sel = this.selector.makeCopy();
 		
-		///TODO implement loop
-		{
-			
+		///TODO implement loop and make sure it's correct
+		do{
+			currentState = (MarsTile)sel.select(Arrays.asList(this.getNeighborStates(currentState)), currentWeight);
+			//.makeCopy()
 			this.traversed.add(null);
-		}
+		}while(currentWeight > END_STATE);
 		
 	}
 	
