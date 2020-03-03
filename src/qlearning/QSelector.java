@@ -52,8 +52,12 @@ public class QSelector {
 		if (Math.random() <= this.epsilon) {
 
 			int tuple = (int) Math.floor(Math.random() * possibleValues.size());
-			this.memory.setWeight(possibleValues.get(tuple).getState().getPosition(),
+			
+			if(this.memory.getWeight(possibleValues.get(tuple).getState().getPosition()) < possibleValues.get(tuple).getWeight()) {
+				this.memory.setWeight(possibleValues.get(tuple).getState().getPosition(),
 					possibleValues.get(tuple).getWeight());
+			}
+			
 			return possibleValues.get(tuple);
 
 		} else {
@@ -73,8 +77,12 @@ public class QSelector {
 			}
 
 			int tuple = bestValues.get((int) Math.floor(Math.random() * bestValues.size()));
-			this.memory.setWeight(possibleValues.get(tuple).getState().getPosition(),
+			
+			if(this.memory.getWeight(possibleValues.get(tuple).getState().getPosition()) < possibleValues.get(tuple).getWeight()) {
+				this.memory.setWeight(possibleValues.get(tuple).getState().getPosition(),
 					possibleValues.get(tuple).getWeight());
+			}
+			
 			return possibleValues.get(tuple);
 		}
 
