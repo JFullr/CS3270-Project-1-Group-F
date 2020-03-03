@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class FileUtils {
-	
+
 	public static final IOException FILE_EMPTY = new IOException("File Does Not Exist Or Is Empty");
 	public static final IOException FILE_TOO_LARGE = new IOException("File Is Too Large");
 
@@ -32,26 +32,27 @@ public class FileUtils {
 
 		return data;
 	}
-	
+
 	public static String[] readLines(String filePath) throws IOException {
-		
+
 		String raw = new String(FileUtils.readFile(filePath));
-		raw = FileUtils.condenseNewLines(raw);;
-		
+		raw = FileUtils.condenseNewLines(raw);
+		;
+
 		return raw.split("\n");
-		
+
 	}
-	
+
 	public static String[] readCsv(String filePath) throws IOException {
-		
+
 		String raw = new String(FileUtils.readFile(filePath));
 		raw = FileUtils.condenseNewLines(raw);
 		raw = raw.replace("\n", ",");
-		
+
 		return raw.split(",");
-		
+
 	}
-	
+
 	private static String condenseNewLines(String value) {
 		return value.replace("\r", "\n").replace("\n\n", "\n");
 	}

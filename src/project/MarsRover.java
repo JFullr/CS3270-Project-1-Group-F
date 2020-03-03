@@ -44,5 +44,5 @@ public class MarsRover {
 	public String getTrainingMap() {
 		return this.map.getDisplayMap();
 	}
-	
+
 }

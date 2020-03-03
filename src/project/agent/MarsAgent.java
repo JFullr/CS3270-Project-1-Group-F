@@ -44,27 +44,27 @@ public class MarsAgent {
 		/// TODO implement loop and make sure it's correct
 		this.traversed.add(currentState);
 		do {
-			
+
 			QTuple intermediateState = sel.select(Arrays.asList(this.getNeighborStates(currentState)), currentWeight);
 			currentState = (MarsTile) intermediateState.getState();
 			currentWeight = intermediateState.getWeight();
-			//currentWeight+=10;
+			// currentWeight+=10;
 			this.traversed.add(currentState);
-			//mapState = this.memory.getWeight(currentState.getPosition());
-			currentWeight+=.1;
-			//double ep = sel.getEpsilon();
-			//sel.setEpsilon(ep-.0001);
-			
+			// mapState = this.memory.getWeight(currentState.getPosition());
+			currentWeight += .1;
+			// double ep = sel.getEpsilon();
+			// sel.setEpsilon(ep-.0001);
+
 			mapState = this.map.getState(currentState.getPosition()).getWeight();
 		} while (mapState < SUCCESS_STATE && mapState > FAIL_STATE);
 
-		/*if (mapState <= FAIL_STATE) {
-			//System.out.println("FAIL");
-			this.memory.setWeight(currentState.getPosition(), Double.NEGATIVE_INFINITY);
-		}
-		if (mapState >= SUCCESS_STATE) {
-			this.memory.setWeight(currentState.getPosition(), Double.POSITIVE_INFINITY);
-		}*/
+		/*
+		 * if (mapState <= FAIL_STATE) { //System.out.println("FAIL");
+		 * this.memory.setWeight(currentState.getPosition(), Double.NEGATIVE_INFINITY);
+		 * } if (mapState >= SUCCESS_STATE) {
+		 * this.memory.setWeight(currentState.getPosition(), Double.POSITIVE_INFINITY);
+		 * }
+		 */
 
 	}
 
@@ -99,10 +99,10 @@ public class MarsAgent {
 	}
 
 	public String getMemoryMap() {
-		
+
 		StringBuilder build = new StringBuilder();
 		build.append("[");
-		
+
 		for (int y = 0; y < this.map.getHeight(); y++) {
 			for (int x = 0; x < this.map.getWidth(); x++) {
 				build.append(this.memory.getWeight(x, y));
@@ -110,13 +110,12 @@ public class MarsAgent {
 					build.append(", ");
 				}
 			}
-			
+
 			if (y != this.map.getHeight() - 1) {
 				build.append("\n");
 			}
 		}
-		
-		
+
 		return build.toString();
 	}
 

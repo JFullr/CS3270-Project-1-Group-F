@@ -32,7 +32,8 @@ public class QSelector {
 
 		for (QValue value : nextStates) {
 			if (value.getPosition() != null) {
-				double calc = this.calculate(this.memory.getWeight(value.getPosition()), value.getWeight(), currentWeight);
+				double calc = this.calculate(this.memory.getWeight(value.getPosition()), value.getWeight(),
+						currentWeight);
 				possibleValues.add(new QTuple(value, calc));
 			}
 		}
@@ -51,10 +52,10 @@ public class QSelector {
 		if (Math.random() <= this.epsilon) {
 
 			int tuple = (int) Math.floor(Math.random() * possibleValues.size());
-			
+
 			this.memory.setWeight(possibleValues.get(tuple).getState().getPosition(),
-				possibleValues.get(tuple).getWeight());
-			
+					possibleValues.get(tuple).getWeight());
+
 			return possibleValues.get(tuple);
 
 		} else {
@@ -74,11 +75,10 @@ public class QSelector {
 			}
 
 			int tuple = bestValues.get((int) Math.floor(Math.random() * bestValues.size()));
-			
-			
+
 			this.memory.setWeight(possibleValues.get(tuple).getState().getPosition(),
-				possibleValues.get(tuple).getWeight());
-			
+					possibleValues.get(tuple).getWeight());
+
 			return possibleValues.get(tuple);
 		}
 
@@ -114,7 +114,7 @@ public class QSelector {
 
 	/// TODO max state value
 	private double calculate(double memoryWeight, double mapStateWeight, double currentTravelWeight) {
-		return (1 - this.alpha) *currentTravelWeight + this.alpha * ( mapStateWeight + this.gamma * memoryWeight);
+		return (1 - this.alpha) * currentTravelWeight + this.alpha * (mapStateWeight + this.gamma * memoryWeight);
 	}
 
 }

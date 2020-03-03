@@ -65,9 +65,9 @@ public class MarsMap {
 	public MarsTile getStartTile() {
 		return this.startState;
 	}
-	
+
 	public MarsTile getState(Point pos) {
-		return this.getState(pos.x,pos.y);
+		return this.getState(pos.x, pos.y);
 	}
 
 	/**
@@ -78,11 +78,11 @@ public class MarsMap {
 	 * @return the state, MarsTile.ILLEGAL_TILEE if illegal
 	 */
 	public MarsTile getState(int x, int y) {
-		
-		if(x < 0 || x >= this.mapWidth || y < 0 || y >= this.mapHeight) {
+
+		if (x < 0 || x >= this.mapWidth || y < 0 || y >= this.mapHeight) {
 			return MarsTile.ILLEGAL_TILE;
 		}
-		
+
 		return this.tiles.get(y).get(x);
 	}
 
@@ -139,7 +139,7 @@ public class MarsMap {
 		if (raw.startsWith("loi")) {
 			value = Double.parseDouble(raw.substring(4).trim());
 		} else if (raw.startsWith("start")) {
-			value =Double.NEGATIVE_INFINITY;
+			value = Double.NEGATIVE_INFINITY;
 		} else {
 			value = Double.parseDouble(raw.trim());
 		}
@@ -151,26 +151,21 @@ public class MarsMap {
 		}
 
 	}
-	
+
 	public String getDisplayMap() {
-		
+
 		StringBuilder build = new StringBuilder();
-		build.append("[");
-		
+
 		for (int y = 0; y < this.getHeight(); y++) {
 			for (int x = 0; x < this.getWidth(); x++) {
-				build.append(this.getState(x, y).getWeight());
-				if (x != this.getWidth() - 1) {
-					build.append(", ");
-				}
+				build.append(this.getState(x, y).padDataForOutputTable(14));
 			}
-			
+
 			if (y != this.getHeight() - 1) {
 				build.append("\n");
 			}
 		}
-		
-		
+
 		return build.toString();
 	}
 

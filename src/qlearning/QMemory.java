@@ -25,7 +25,7 @@ public class QMemory {
 			return false;
 		}
 	}
-	
+
 	public double getWeight(int x, int y) {
 		try {
 			return this.weights[x][y].getWeight();
@@ -33,12 +33,13 @@ public class QMemory {
 			return Double.NEGATIVE_INFINITY;
 		}
 	}
-	
+
 	public boolean setWeight(Point pos, double weight) {
-		return this.setWeight(pos.x,pos.y, weight);
+		return this.setWeight(pos.x, pos.y, weight);
 	}
+
 	public double getWeight(Point pos) {
-		return this.getWeight(pos.x,pos.y);
+		return this.getWeight(pos.x, pos.y);
 	}
 
 	private QValue makeQValue() {
@@ -53,8 +54,13 @@ public class QMemory {
 				this.weight = weight;
 			}
 
-			public Point getPosition() { return null; }
-			public QValue makeCopy() { return null; }
+			public Point getPosition() {
+				return null;
+			}
+
+			public QValue makeCopy() {
+				return null;
+			}
 		};
 	}
 
