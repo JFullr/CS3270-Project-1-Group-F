@@ -65,6 +65,10 @@ public class MarsMap {
 	public MarsTile getStartTile() {
 		return this.startState;
 	}
+	
+	public MarsTile getState(Point pos) {
+		return this.getState(pos.x,pos.y);
+	}
 
 	/**
 	 * Gets the state.
@@ -135,7 +139,7 @@ public class MarsMap {
 		if (raw.startsWith("loi")) {
 			value = Double.parseDouble(raw.substring(4).trim());
 		} else if (raw.startsWith("start")) {
-			value = -9999;
+			value =Double.NEGATIVE_INFINITY;
 		} else {
 			value = Double.parseDouble(raw.trim());
 		}

@@ -12,8 +12,8 @@ import qlearning.QTuple;
 
 public class MarsAgent {
 
-	private static final double FAIL_STATE = -.01;
-	private static final double SUCCESS_STATE = 100;
+	private static final double FAIL_STATE = -50;
+	private static final double SUCCESS_STATE = 1;
 
 	private ArrayList<MarsTile> traversed;
 	private MarsMap map;
@@ -44,23 +44,27 @@ public class MarsAgent {
 		/// TODO implement loop and make sure it's correct
 		this.traversed.add(currentState);
 		do {
-			//currentWeight++;
+			
 			QTuple intermediateState = sel.select(Arrays.asList(this.getNeighborStates(currentState)), currentWeight);
 			currentState = (MarsTile) intermediateState.getState();
 			currentWeight = intermediateState.getWeight();
-			// .makeCopy()
-			
+			//currentWeight+=10;
 			this.traversed.add(currentState);
-			mapState = this.memory.getWeight(currentState.getPosition());
+			//mapState = this.memory.getWeight(currentState.getPosition());
+			currentWeight+=.1;
+			//double ep = sel.getEpsilon();
+			//sel.setEpsilon(ep-.0001);
 			
+			mapState = this.map.getState(currentState.getPosition()).getWeight();
 		} while (mapState < SUCCESS_STATE && mapState > FAIL_STATE);
 
-		if (mapState <= FAIL_STATE) {
+		/*if (mapState <= FAIL_STATE) {
+			//System.out.println("FAIL");
 			this.memory.setWeight(currentState.getPosition(), Double.NEGATIVE_INFINITY);
 		}
 		if (mapState >= SUCCESS_STATE) {
 			this.memory.setWeight(currentState.getPosition(), Double.POSITIVE_INFINITY);
-		}
+		}*/
 
 	}
 
