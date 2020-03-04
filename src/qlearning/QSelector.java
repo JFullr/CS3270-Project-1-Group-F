@@ -1,7 +1,7 @@
 package qlearning;
 
+import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class QSelector {
 
@@ -11,10 +11,14 @@ public class QSelector {
 
 	private QMemory memory;
 
-	public QSelector(QMemory memory) {
-		this.init(.5, .9, .1, memory);
+	public QSelector() {
+		this.init(.5, .9, .1, null);
 	}
-
+	
+	public QSelector(QMemory memory) {
+		this.init(.5, .9, .1,memory);
+	}
+	
 	public QSelector(double alpha, double gamma, double epsilon, QMemory memory) {
 		this.init(alpha, gamma, epsilon, memory);
 	}
@@ -24,16 +28,18 @@ public class QSelector {
 		this.epsilon = epsilon;
 		this.alpha = alpha;
 		this.memory = memory;
+		if(memory == null) {
+			this.memory = new QMemory();
+		}
 	}
 
-	public QTuple select(Iterable<QValue> nextStates, double currentWeight) {
+	public QTuple select(Iterable<QValue> nextStates, QValue currentState, double currentWeight) {
 
 		ArrayList<QTuple> possibleValues = new ArrayList<QTuple>();
 
 		for (QValue value : nextStates) {
-			if (value.getPosition() != null) {
-				double calc = this.calculate(this.memory.getWeight(value.getPosition()), value.getWeight(),
-						currentWeight);
+			if (value != null && value.getPosition() != null) {
+				double calc = this.calculate(this.memory.getWeight(value), value.getWeight(), currentWeight);
 				possibleValues.add(new QTuple(value, calc));
 			}
 		}
@@ -45,7 +51,7 @@ public class QSelector {
 
 		ArrayList<QTuple> memonizedValues = new ArrayList<QTuple>();
 		for (QTuple pos : possibleValues) {
-			memonizedValues.add(new QTuple(pos.getState(), this.memory.getWeight(pos.getState().getPosition())));
+			memonizedValues.add(new QTuple(pos.getState(), this.memory.getWeight(pos.getState())));
 		}
 
 		// FIXME check for correctness
@@ -53,8 +59,7 @@ public class QSelector {
 
 			int tuple = (int) Math.floor(Math.random() * possibleValues.size());
 
-			this.memory.setWeight(possibleValues.get(tuple).getState().getPosition(),
-					possibleValues.get(tuple).getWeight());
+			this.memory.setWeight(currentState, possibleValues.get(tuple).getWeight());
 
 			return possibleValues.get(tuple);
 
@@ -76,8 +81,7 @@ public class QSelector {
 
 			int tuple = bestValues.get((int) Math.floor(Math.random() * bestValues.size()));
 
-			this.memory.setWeight(possibleValues.get(tuple).getState().getPosition(),
-					possibleValues.get(tuple).getWeight());
+			this.memory.setWeight(currentState, possibleValues.get(tuple).getWeight());
 
 			return possibleValues.get(tuple);
 		}
@@ -111,10 +115,14 @@ public class QSelector {
 	public QSelector makeCopy() {
 		return new QSelector(this.alpha, this.gamma, this.epsilon, this.memory);
 	}
-
+	
+	public Double getMemoryValue(QValue state) {
+		return this.memory.getWeight(state);
+	}
+	
 	/// TODO max state value
 	private double calculate(double memoryWeight, double mapStateWeight, double currentTravelWeight) {
 		return (1 - this.alpha) * currentTravelWeight + this.alpha * (mapStateWeight + this.gamma * memoryWeight);
 	}
-
+	
 }

@@ -80,7 +80,7 @@ public class MarsMap {
 	public MarsTile getState(int x, int y) {
 
 		if (x < 0 || x >= this.mapWidth || y < 0 || y >= this.mapHeight) {
-			return MarsTile.ILLEGAL_TILE;
+			return null;
 		}
 
 		return this.tiles.get(y).get(x);
@@ -139,7 +139,7 @@ public class MarsMap {
 		if (raw.startsWith("loi")) {
 			value = Double.parseDouble(raw.substring(4).trim());
 		} else if (raw.startsWith("start")) {
-			value = Double.NEGATIVE_INFINITY;
+			value = -80;
 		} else {
 			value = Double.parseDouble(raw.trim());
 		}

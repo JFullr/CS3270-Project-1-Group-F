@@ -1,67 +1,25 @@
 package qlearning;
 
-import java.awt.Point;
+import java.util.HashMap;
 
 public class QMemory {
+	
+	HashMap<QValue, Double> valueMap;
 
-	private QValue[][] weights;
+	public QMemory() {
+		this.valueMap = new HashMap<QValue, Double>();
+	}
 
-	public QMemory(int width, int height) {
+	public void setWeight(QValue key, double weight) {
+		this.valueMap.put(key, 0.0);
+	}
 
-		this.weights = new QValue[width][height];
-		for (int x = 0; x < this.weights.length; x++) {
-			for (int y = 0; y < this.weights[x].length; y++) {
-				this.weights[x][y] = this.makeQValue();
-			}
+	public double getWeight(QValue key) {
+		if(!this.valueMap.containsKey(key)) {
+			this.valueMap.put(key, 0.0);
 		}
-
+		return this.valueMap.get(key);
 	}
 
-	public boolean setWeight(int x, int y, double weight) {
-		try {
-			this.weights[x][y].setWeight(weight);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
-	}
-
-	public double getWeight(int x, int y) {
-		try {
-			return this.weights[x][y].getWeight();
-		} catch (Exception e) {
-			return Double.NEGATIVE_INFINITY;
-		}
-	}
-
-	public boolean setWeight(Point pos, double weight) {
-		return this.setWeight(pos.x, pos.y, weight);
-	}
-
-	public double getWeight(Point pos) {
-		return this.getWeight(pos.x, pos.y);
-	}
-
-	private QValue makeQValue() {
-		return new QValue() {
-			private double weight = 0;
-
-			public double getWeight() {
-				return this.weight;
-			}
-
-			public void setWeight(double weight) {
-				this.weight = weight;
-			}
-
-			public Point getPosition() {
-				return null;
-			}
-
-			public QValue makeCopy() {
-				return null;
-			}
-		};
-	}
 
 }
