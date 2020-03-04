@@ -1,6 +1,7 @@
 package qlearning;
 
 import java.util.HashMap;
+import java.util.Set;
 
 public class QMemory {
 	
@@ -11,7 +12,7 @@ public class QMemory {
 	}
 
 	public void setWeight(QValue key, double weight) {
-		this.valueMap.put(key, 0.0);
+		this.valueMap.put(key, weight);
 	}
 
 	public double getWeight(QValue key) {
@@ -21,5 +22,8 @@ public class QMemory {
 		return this.valueMap.get(key);
 	}
 
-
+	public Set<QValue> getKeys() {
+		return this.valueMap.keySet();
+	}
+	
 }

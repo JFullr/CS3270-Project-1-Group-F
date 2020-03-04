@@ -21,11 +21,13 @@ public class MarsAgent {
 	private MarsMap map;
 
 	private QSelector selector;
+	private HashMap<QValue, List<QValue>> validStates;
 
 	public MarsAgent(MarsMap map) {
 		this.traversed = new ArrayList<MarsTile>();
 		this.map = map;
 		this.selector = new QSelector();
+		this.validStates = this.initStateMap();
 	}
 
 	public ArrayList<MarsTile> getPath() {
@@ -41,13 +43,13 @@ public class MarsAgent {
 		double mapState = 0;
 		QSelector sel = this.selector.makeCopy();
 		
-		HashMap<QValue, List<QValue>> validStates = generateStateMap();
+		
 		
 		/// TODO implement loop and make sure it's correct
 		this.traversed.add(currentState);
 		do {
 
-			QTuple intermediateState = sel.select(validStates.get(currentState), currentState, currentWeight);
+			QTuple intermediateState = sel.select(this.validStates.get(currentState), currentState, currentWeight);
 			
 			currentState = (MarsTile) intermediateState.getState();
 			currentWeight = intermediateState.getWeight();
@@ -61,7 +63,7 @@ public class MarsAgent {
 
 	}
 
-	private HashMap<QValue, List<QValue>> generateStateMap() {
+	private HashMap<QValue, List<QValue>> initStateMap() {
 
 		HashMap<QValue, List<QValue>> stateMap = new HashMap<QValue, List<QValue>>();
 
@@ -79,11 +81,6 @@ public class MarsAgent {
 	private MarsTile[] getNeighborStates(MarsTile tile) {
 		return new MarsTile[] { this.getNorthState(tile), this.getEastState(tile), this.getSouthState(tile),
 				this.getWestState(tile) };
-	}
-
-	private MarsTile getCenterState(MarsTile tile) {
-		Point pos = tile.getPosition();
-		return this.map.getState(pos.x, pos.y);
 	}
 
 	private MarsTile getNorthState(MarsTile tile) {
@@ -110,7 +107,7 @@ public class MarsAgent {
 
 		StringBuilder build = new StringBuilder();
 		build.append("[");
-
+		//*
 		for (int y = 0; y < this.map.getHeight(); y++) {
 			for (int x = 0; x < this.map.getWidth(); x++) {
 				build.append(this.selector.getMemoryValue(this.map.getState(x, y)));
@@ -123,7 +120,14 @@ public class MarsAgent {
 				build.append("\n");
 			}
 		}
-
+		/*/
+		for(QValue value : this.selector.getMemoryKeys(null)) {
+			
+		}
+		build.append( this.selector.getMemoryKeys(null));build.append("\n");
+		build.append(this.map.getState(4, 0));
+		//*/
+		
 		return build.toString();
 	}
 

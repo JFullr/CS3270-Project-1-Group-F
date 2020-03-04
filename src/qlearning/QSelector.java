@@ -1,7 +1,7 @@
 package qlearning;
 
-import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class QSelector {
 
@@ -30,6 +30,8 @@ public class QSelector {
 		this.memory = memory;
 		if(memory == null) {
 			this.memory = new QMemory();
+		}else {
+			this.memory = memory;
 		}
 	}
 
@@ -38,7 +40,7 @@ public class QSelector {
 		ArrayList<QTuple> possibleValues = new ArrayList<QTuple>();
 
 		for (QValue value : nextStates) {
-			if (value != null && value.getPosition() != null) {
+			if (value != null) {
 				double calc = this.calculate(this.memory.getWeight(value), value.getWeight(), currentWeight);
 				possibleValues.add(new QTuple(value, calc));
 			}
@@ -118,6 +120,9 @@ public class QSelector {
 	
 	public Double getMemoryValue(QValue state) {
 		return this.memory.getWeight(state);
+	}
+	public Set<QValue> getMemoryKeys(QValue state) {
+		return this.memory.getKeys();
 	}
 	
 	/// TODO max state value
