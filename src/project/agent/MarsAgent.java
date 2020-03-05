@@ -21,13 +21,13 @@ public class MarsAgent {
 	private MarsMap map;
 
 	private QSelector selector;
-	private HashMap<QValue, List<QValue>> validStates;
+	private HashMap<QValue, Iterable<QValue>> validStates;
 
 	public MarsAgent(MarsMap map) {
 		this.traversed = new ArrayList<MarsTile>();
 		this.map = map;
-		this.selector = new QSelector();
 		this.validStates = this.initStateMap();
+		this.selector = new QSelector(this.validStates);
 	}
 
 	public ArrayList<MarsTile> getPath() {
@@ -43,34 +43,44 @@ public class MarsAgent {
 		double mapState = 0;
 		QSelector sel = this.selector.makeCopy();
 		
-		
-		
 		/// TODO implement loop and make sure it's correct
 		this.traversed.add(currentState);
 		do {
+			
 
-			QTuple intermediateState = sel.select(this.validStates.get(currentState), currentState, currentWeight);
+			QTuple intermediateState = sel.select(currentState, currentWeight);
 			
 			currentState = (MarsTile) intermediateState.getState();
 			currentWeight = intermediateState.getWeight();
 			
-			currentWeight += 1;
+			//currentWeight += .1;
 			
 			this.traversed.add(currentState);
 
 			mapState = this.map.getState(currentState.getPosition()).getWeight();
 		} while (mapState < SUCCESS_STATE && mapState > FAIL_STATE);
+		if(! (mapState > FAIL_STATE)) {
+			sel.select(currentState, currentWeight);
+		}
 
 	}
+	
+	public double getEpsilon() {
+		return this.selector.getEpsilon();
+	}
+	public void setEpsilon(double value) {
+		this.selector.setEpsilon(value);
+	}
 
-	private HashMap<QValue, List<QValue>> initStateMap() {
+	private HashMap<QValue, Iterable<QValue>> initStateMap() {
 
-		HashMap<QValue, List<QValue>> stateMap = new HashMap<QValue, List<QValue>>();
+		HashMap<QValue, Iterable<QValue>> stateMap = new HashMap<QValue, Iterable<QValue>>();
 
 		for (int x = 0; x < this.map.getWidth(); x++) {
 			for (int y = 0; y < this.map.getHeight(); y++) {
 				MarsTile state = this.map.getState(x, y);
-				stateMap.put(state, Arrays.asList(this.getNeighborStates(state)));
+				List<QValue> list = Arrays.asList(this.getNeighborStates(state));
+				stateMap.put(state,list);
 			}
 		}
 		

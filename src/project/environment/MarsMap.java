@@ -139,7 +139,7 @@ public class MarsMap {
 		if (raw.startsWith("loi")) {
 			value = Double.parseDouble(raw.substring(4).trim());
 		} else if (raw.startsWith("start")) {
-			value = -80;
+			value = 0;
 		} else {
 			value = Double.parseDouble(raw.trim());
 		}

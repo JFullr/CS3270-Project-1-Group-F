@@ -21,7 +21,7 @@ public class Main {
 		int start = paths.size() - 5 < 0 ? 0 : paths.size() - 5;
 
 		for (int i = start; i < paths.size(); i++) {
-			System.out.println(paths.get(i));
+			System.out.println(paths.get(i).size()+"::  "+paths.get(i).get(paths.get(i).size()-1));
 		}
 
 	}

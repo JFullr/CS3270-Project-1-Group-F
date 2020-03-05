@@ -1,7 +1,8 @@
 package qlearning;
 
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.List;
 
 public class QSelector {
 
@@ -10,20 +11,21 @@ public class QSelector {
 	private double alpha;
 
 	private QMemory memory;
+	private HashMap<QValue,Iterable<QValue>> stateMap;
 
-	public QSelector() {
-		this.init(.5, .9, .1, null);
+	public QSelector(HashMap<QValue,Iterable<QValue>> stateMap) {
+		this.init(.5, .9, .1, stateMap, null);
 	}
 	
-	public QSelector(QMemory memory) {
-		this.init(.5, .9, .1,memory);
+	public QSelector(HashMap<QValue,Iterable<QValue>> stateMap, QMemory memory) {
+		this.init(.5, .9, .1, stateMap, memory);
 	}
 	
-	public QSelector(double alpha, double gamma, double epsilon, QMemory memory) {
-		this.init(alpha, gamma, epsilon, memory);
+	public QSelector(double alpha, double gamma, double epsilon, HashMap<QValue,Iterable<QValue>> stateMap, QMemory memory) {
+		this.init(alpha, gamma, epsilon, stateMap, memory);
 	}
 
-	private void init(double alpha, double gamma, double epsilon, QMemory memory) {
+	private void init(double alpha, double gamma, double epsilon, HashMap<QValue,Iterable<QValue>> stateMap, QMemory memory) {
 		this.gamma = gamma;
 		this.epsilon = epsilon;
 		this.alpha = alpha;
@@ -33,37 +35,37 @@ public class QSelector {
 		}else {
 			this.memory = memory;
 		}
+		this.stateMap = stateMap;
 	}
 
-	public QTuple select(Iterable<QValue> nextStates, QValue currentState, double currentWeight) {
+	public QTuple select(QValue positionState, double currentWeight) {
 
 		ArrayList<QTuple> possibleValues = new ArrayList<QTuple>();
-
-		for (QValue value : nextStates) {
+		
+		for (QValue value : this.stateMap.get(positionState)) {
 			if (value != null) {
 				double calc = this.calculate(this.memory.getWeight(value), value.getWeight(), currentWeight);
 				possibleValues.add(new QTuple(value, calc));
 			}
 		}
 
-		// no states given, or all illegal states
+		// all illegal states, or no connecting states
 		if (possibleValues.size() < 1) {
 			return null;
 		}
-
+		
 		ArrayList<QTuple> memonizedValues = new ArrayList<QTuple>();
 		for (QTuple pos : possibleValues) {
 			memonizedValues.add(new QTuple(pos.getState(), this.memory.getWeight(pos.getState())));
 		}
 
+		QTuple finalState = null;
 		// FIXME check for correctness
 		if (Math.random() <= this.epsilon) {
 
 			int tuple = (int) Math.floor(Math.random() * possibleValues.size());
 
-			this.memory.setWeight(currentState, possibleValues.get(tuple).getWeight());
-
-			return possibleValues.get(tuple);
+			finalState = possibleValues.get(tuple);
 
 		} else {
 
@@ -83,11 +85,18 @@ public class QSelector {
 
 			int tuple = bestValues.get((int) Math.floor(Math.random() * bestValues.size()));
 
-			this.memory.setWeight(currentState, possibleValues.get(tuple).getWeight());
-
-			return possibleValues.get(tuple);
+			finalState = possibleValues.get(tuple);
 		}
-
+		
+		double qWeight = this.getMaxQValue(this.stateMap.get(finalState.getState()));
+		double calc = this.calculate(qWeight, finalState.getState().getWeight(), currentWeight);
+		
+		//this.memory.setWeight(finalState.getState(), finalState.getWeight());
+		//this.memory.setWeight(finalState.getState(), calc);
+		this.memory.setWeight(finalState.getState(), calc);
+		
+		return new QTuple(finalState.getState(),calc);
+		
 	}
 
 	public double getEpsilon() {
@@ -115,18 +124,29 @@ public class QSelector {
 	}
 
 	public QSelector makeCopy() {
-		return new QSelector(this.alpha, this.gamma, this.epsilon, this.memory);
+		return new QSelector(this.alpha, this.gamma, this.epsilon, this.stateMap, this.memory);
 	}
 	
-	public Double getMemoryValue(QValue state) {
+	public void setMemoryValue(QValue state, double value) {
+		this.memory.getWeight(state);
+	}
+	public double getMemoryValue(QValue state) {
 		return this.memory.getWeight(state);
 	}
-	public Set<QValue> getMemoryKeys(QValue state) {
-		return this.memory.getKeys();
+	
+	private double getMaxQValue(Iterable<QValue> values) {
+		double max = Double.NEGATIVE_INFINITY;
+		for(QValue value : values) {
+			if(value != null && this.memory.getWeight(value) > max) {
+				max =  this.memory.getWeight(value);
+			}
+		}
+		return max;
 	}
 	
 	/// TODO max state value
 	private double calculate(double memoryWeight, double mapStateWeight, double currentTravelWeight) {
+		//return currentTravelWeight + this.alpha * (mapStateWeight + this.gamma * (memoryWeight) - currentTravelWeight);
 		return (1 - this.alpha) * currentTravelWeight + this.alpha * (mapStateWeight + this.gamma * memoryWeight);
 	}
 	

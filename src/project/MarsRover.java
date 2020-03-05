@@ -22,11 +22,15 @@ public class MarsRover {
 		
 		ArrayList<ArrayList<QValue>> paths = new ArrayList<ArrayList<QValue>>();
 		
+		double decrement = this.agent.getEpsilon()/rounds;
+		
 		for(int i = 0; i < rounds; i++) {
 			this.traverse();
 			ArrayList<QValue> newPath = new ArrayList<QValue>();
 			newPath.addAll(this.agent.getPath());
 			paths.add(newPath);
+			
+			this.agent.setEpsilon(this.agent.getEpsilon()-decrement);
 		}
 		
 		return paths;
