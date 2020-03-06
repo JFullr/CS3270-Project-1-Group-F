@@ -37,7 +37,6 @@ public class FileUtils {
 
 		String raw = new String(FileUtils.readFile(filePath));
 		raw = FileUtils.condenseNewLines(raw);
-		;
 
 		return raw.split("\n");
 
