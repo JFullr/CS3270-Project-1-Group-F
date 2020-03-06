@@ -10,7 +10,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		MarsRover rover = new MarsRover("MarsTerrainMap1.csv");
+		MarsRover rover = new MarsRover("MarsTerrainMap2.csv");
 		ArrayList<ArrayList<QValue>> paths = rover.train(TRANING_ROUNDS);
 
 		System.out.println("Training Map:");

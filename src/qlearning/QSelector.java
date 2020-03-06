@@ -34,7 +34,7 @@ public class QSelector {
 		this.memory = memory;
 		if (memory == null) {
 			this.memory = new QMemory();
-			/*
+			
 			for (QValue key : stateMap.keySet()) {
 				for (QValue target : stateMap.get(key)) {
 					if (key != null && target != null) {
@@ -42,7 +42,7 @@ public class QSelector {
 					}
 				}
 			}
-			//*/
+			
 		} else {
 			this.memory = memory;
 		}
@@ -154,9 +154,9 @@ public class QSelector {
 				if (this.memory.getWeight(state, value) > max) {
 					values.clear();
 					max = this.memory.getWeight(state, value);
-					values.add(state);
+					values.add(value);
 				} else if (this.memory.getWeight(state, value) == max) {
-					values.add(state);
+					values.add(value);
 				}
 
 			}
