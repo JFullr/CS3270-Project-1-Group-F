@@ -14,7 +14,7 @@ public class QTuple {
 		return state;
 	}
 
-	public double getWeight() {
+	public Double getWeight() {
 		return weight;
 	}
 

@@ -13,9 +13,9 @@ import qlearning.QTuple;
 import qlearning.QValue;
 
 public class MarsAgent {
-
-	private static final double FAIL_STATE = -50;
-	private static final double SUCCESS_STATE = 1;
+	
+	private static final double FAIL_STATE = -1;
+	private static final double SUCCESS_STATE = 100;
 
 	private ArrayList<MarsTile> traversed;
 	private MarsMap map;
@@ -33,8 +33,8 @@ public class MarsAgent {
 	public ArrayList<MarsTile> getPath() {
 		return this.traversed;
 	}
-
-	public void traverse() {
+	
+	public void traverse(double epsilon, double gamma, double alpha) {
 
 		this.traversed.clear();
 
@@ -42,6 +42,9 @@ public class MarsAgent {
 		double currentWeight = 0;
 		double mapState = 0;
 		QSelector sel = this.selector.makeCopy();
+		sel.setAlpha(alpha);
+		sel.setEpsilon(epsilon);
+		sel.setGamma(gamma);
 		
 		/// TODO implement loop and make sure it's correct
 		this.traversed.add(currentState);
@@ -53,14 +56,13 @@ public class MarsAgent {
 			currentState = (MarsTile) intermediateState.getState();
 			currentWeight = intermediateState.getWeight();
 			
-			//currentWeight += .1;
-			
 			this.traversed.add(currentState);
 
 			mapState = this.map.getState(currentState.getPosition()).getWeight();
 		} while (mapState < SUCCESS_STATE && mapState > FAIL_STATE);
+		
 		if(! (mapState > FAIL_STATE)) {
-			sel.select(currentState, currentWeight);
+			//sel.select(currentState, currentWeight);
 		}
 
 	}
@@ -72,43 +74,29 @@ public class MarsAgent {
 		this.selector.setEpsilon(value);
 	}
 
-	private HashMap<QValue, Iterable<QValue>> initStateMap() {
+	
 
-		HashMap<QValue, Iterable<QValue>> stateMap = new HashMap<QValue, Iterable<QValue>>();
-
-		for (int x = 0; x < this.map.getWidth(); x++) {
-			for (int y = 0; y < this.map.getHeight(); y++) {
-				MarsTile state = this.map.getState(x, y);
-				List<QValue> list = Arrays.asList(this.getNeighborStates(state));
-				stateMap.put(state,list);
-			}
-		}
-		
-		return stateMap;
-
-	}
-
-	private MarsTile[] getNeighborStates(MarsTile tile) {
+	public MarsTile[] getNeighborStates(MarsTile tile) {
 		return new MarsTile[] { this.getNorthState(tile), this.getEastState(tile), this.getSouthState(tile),
 				this.getWestState(tile) };
 	}
 
-	private MarsTile getNorthState(MarsTile tile) {
+	public MarsTile getNorthState(MarsTile tile) {
 		Point pos = tile.getPosition();
 		return this.map.getState(pos.x, pos.y - 1);
 	}
 
-	private MarsTile getSouthState(MarsTile tile) {
+	public MarsTile getSouthState(MarsTile tile) {
 		Point pos = tile.getPosition();
 		return this.map.getState(pos.x, pos.y + 1);
 	}
 
-	private MarsTile getEastState(MarsTile tile) {
+	public MarsTile getEastState(MarsTile tile) {
 		Point pos = tile.getPosition();
 		return this.map.getState(pos.x + 1, pos.y);
 	}
 
-	private MarsTile getWestState(MarsTile tile) {
+	public MarsTile getWestState(MarsTile tile) {
 		Point pos = tile.getPosition();
 		return this.map.getState(pos.x - 1, pos.y);
 	}
@@ -139,6 +127,22 @@ public class MarsAgent {
 		//*/
 		
 		return build.toString();
+	}
+	
+	private HashMap<QValue, Iterable<QValue>> initStateMap() {
+
+		HashMap<QValue, Iterable<QValue>> stateMap = new HashMap<QValue, Iterable<QValue>>();
+
+		for (int x = 0; x < this.map.getWidth(); x++) {
+			for (int y = 0; y < this.map.getHeight(); y++) {
+				MarsTile state = this.map.getState(x, y);
+				List<QValue> list = Arrays.asList(this.getNeighborStates(state));
+				stateMap.put(state,list);
+			}
+		}
+		
+		return stateMap;
+
 	}
 
 }
