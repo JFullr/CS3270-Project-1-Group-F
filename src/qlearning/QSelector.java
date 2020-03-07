@@ -92,8 +92,11 @@ public class QSelector {
 		 * nextState);//q_values[state][action]; this.memory.setWeight(nextState,
 		 * nextState,this.memory.getWeight(nextState, nextState)+ alpha * td_error); /
 		 */
-
-		double calc2 = this.calculate(qWeight, nextState.getWeight(), this.memory.getWeight(startState, nextState));
+		double reward = -1;
+		/*if(nextState.getWeight() < 0) {
+			reward = -80000;
+		}*/
+		double calc2 = this.calculate(qWeight, nextState.getWeight()+reward, this.memory.getWeight(startState, nextState));
 		double mem = this.memory.getWeight(startState, nextState);
 		this.memory.setWeight(startState, nextState,calc2);
 		// */
@@ -187,8 +190,12 @@ public class QSelector {
 	
 	/*/
 	private double calculate(double maxOfNext, double mapStateWeightReward, double stateActionValue) {
-		return ((1 - this.alpha) * stateActionValue) + (this.alpha * (mapStateWeightReward + (this.gamma * maxOfNext)));
+		return stateActionValue + alpha * (mapStateWeightReward + gamma * maxOfNext - stateActionValue);
+		//return ((1 - this.alpha) * stateActionValue) + (this.alpha * (mapStateWeightReward + (this.gamma * maxOfNext)));
 	}
+	
+	
+	
 	//*/
 
 	/*
