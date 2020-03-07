@@ -34,7 +34,7 @@ public class QSelector {
 		this.memory = memory;
 		if (memory == null) {
 			this.memory = new QMemory();
-			
+
 			for (QValue key : stateMap.keySet()) {
 				for (QValue target : stateMap.get(key)) {
 					if (key != null && target != null) {
@@ -42,7 +42,7 @@ public class QSelector {
 					}
 				}
 			}
-			
+
 		} else {
 			this.memory = memory;
 		}
@@ -94,10 +94,11 @@ public class QSelector {
 		 */
 
 		double calc2 = this.calculate(qWeight, nextState.getWeight(), this.memory.getWeight(startState, nextState));
-		this.memory.setWeight(startState, nextState, calc2);
+		double mem = this.memory.getWeight(startState, nextState);
+		this.memory.setWeight(startState, nextState,calc2);
 		// */
 
-		return new QTuple(nextState, 0);
+		return new QTuple(nextState, calc2);
 
 	}
 
@@ -172,18 +173,33 @@ public class QSelector {
 	 * currentTravelWeight); //return (1 - this.alpha) * currentTravelWeight +
 	 * this.alpha * (mapStateWeight + this.gamma * memoryWeight); } /
 	 */
+	
+	/**
+	double calculate(double memoryWeight, double mapStateWeight, double currentTravelWeight) {
+		return currentTravelWeight + this.alpha * (mapStateWeight + this.gamma * (memoryWeight) - currentTravelWeight);
+	}
 
 	// private double calculate(double maxOfNext, double mapStateWeightReward,
 	// double stateActionValue) {
 	// return ((1 - this.alpha) * stateActionValue) + (this.alpha *
 	// (mapStateWeightReward + (this.gamma * maxOfNext)));
 	// }
-
-	private double calculate(double maxOfNext, double mapStateWeightReward, double travelCost) {
-
-		return travelCost + (this.alpha * (mapStateWeightReward + maxOfNext - travelCost));
-
+	
+	/*/
+	private double calculate(double maxOfNext, double mapStateWeightReward, double stateActionValue) {
+		return ((1 - this.alpha) * stateActionValue) + (this.alpha * (mapStateWeightReward + (this.gamma * maxOfNext)));
 	}
+	//*/
+
+	/*
+	 * private double calculate(double maxOfNext, double mapStateWeightReward,
+	 * double travelCost) {
+	 * 
+	 * return travelCost + (this.alpha * (mapStateWeightReward + maxOfNext -
+	 * travelCost));
+	 * 
+	 * }
+	 */
 
 	// */
 
