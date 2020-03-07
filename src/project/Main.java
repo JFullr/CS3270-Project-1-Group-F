@@ -10,7 +10,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		MarsRover rover = new MarsRover("MarsTerrainMap1.csv");
+		MarsRover rover = new MarsRover("MarsTerrainMap0.csv");
 		ArrayList<ArrayList<QValue>> paths = rover.train(TRANING_ROUNDS);
 
 		System.out.println("Training Map:");
@@ -20,6 +20,8 @@ public class Main {
 		System.out.println(rover.getLearnedMemory() + System.lineSeparator());
 
 		int start = paths.size() - 5 < 0 ? 0 : paths.size() - 5;
+		
+		System.out.println(paths.get(0));
 
 		for (int i = start; i < paths.size(); i++) {
 			System.out.println(paths.get(i).size() + "::  " + paths.get(i).get(paths.get(i).size() - 1));
