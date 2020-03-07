@@ -88,6 +88,38 @@ public class MarsMap {
 		return this.tiles.get(yCoord).get(xCoord);
 	}
 
+	/**
+	 * Gets the display map.
+	 *
+	 * @return the display map
+	 */
+	public String getDisplayMap() {
+
+		StringBuilder build = new StringBuilder();
+
+		for (int y = 0; y < this.getHeight(); y++) {
+			for (int x = 0; x < this.getWidth(); x++) {
+				build.append(this.getState(x, y).padDataForOutputTable(14));
+			}
+
+			if (y != this.getHeight() - 1) {
+				build.append("\n");
+			}
+		}
+
+		return build.toString();
+	}
+
+	private Dimension getDimensions(String rawValues) throws NumberFormatException {
+
+		String[] rawDims = rawValues.toLowerCase().split("x");
+
+		int width = Integer.parseInt(rawDims[1].trim());
+		int height = Integer.parseInt(rawDims[0].trim());
+
+		return new Dimension(width, height);
+	}
+	
 	private void createMapFromCsv(String filePath) {
 
 		try {
@@ -140,45 +172,6 @@ public class MarsMap {
 			this.startState = this.getState(xCoord, yCoord);
 		}
 
-	}
-
-	/**
-	 * Gets the display map.
-	 *
-	 * @return the display map
-	 */
-	public String getDisplayMap() {
-
-		StringBuilder build = new StringBuilder();
-
-		for (int y = 0; y < this.getHeight(); y++) {
-			for (int x = 0; x < this.getWidth(); x++) {
-				build.append(this.getState(x, y).padDataForOutputTable(14));
-			}
-
-			if (y != this.getHeight() - 1) {
-				build.append("\n");
-			}
-		}
-
-		return build.toString();
-	}
-
-	/**
-	 * Gets the dimensions from the given raw values.
-	 *
-	 * @param rawValues the raw values
-	 * @return the dimensions
-	 * @throws NumberFormatException the number format exception
-	 */
-	private Dimension getDimensions(String rawValues) throws NumberFormatException {
-
-		String[] rawDims = rawValues.toLowerCase().split("x");
-
-		int width = Integer.parseInt(rawDims[1].trim());
-		int height = Integer.parseInt(rawDims[0].trim());
-
-		return new Dimension(width, height);
 	}
 
 	private class Dimension {

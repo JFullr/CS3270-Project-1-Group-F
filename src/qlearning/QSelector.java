@@ -74,13 +74,12 @@ public class QSelector {
 	}
 
 	/**
-	 * Selects the new state using the start state and current weight.
+	 * Selects the new state using the specified state.
 	 *
 	 * @param startState    the start state
-	 * @param currentWeight the current weight
 	 * @return the q tuple
 	 */
-	public QTuple select(QValue startState, double currentWeight) {
+	public QTuple select(QValue startState) {
 
 		ArrayList<QValue> possibleValues = new ArrayList<QValue>();
 		for (QValue value : this.stateMap.get(startState)) {
@@ -212,7 +211,7 @@ public class QSelector {
 	}
 
 	/**
-	 * Calculates the new value of the new state.
+	 * Calculates the new qvalue of the state action pair.
 	 *
 	 * @param maxOfNext            the max Q value of the next state
 	 * @param mapStateWeightReward the map state weight reward

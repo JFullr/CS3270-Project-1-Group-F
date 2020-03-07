@@ -51,7 +51,7 @@ public class MarsAgent {
 	}
 
 	/**
-	 * Traverse.
+	 * Traverse the given map with the qlearning selector.
 	 *
 	 * @param epsilon the epsilon
 	 * @param gamma the gamma
@@ -62,7 +62,6 @@ public class MarsAgent {
 		this.traversed.clear();
 
 		MarsTile currentState = this.map.getStartTile();
-		double currentWeight = 0;
 		double mapState = 0;
 		QSelector sel = this.selector.makeCopy();
 		sel.setAlpha(alpha);
@@ -72,10 +71,9 @@ public class MarsAgent {
 		this.traversed.add(currentState);
 		do {
 
-			QTuple intermediateState = sel.select(currentState, currentWeight);
+			QTuple intermediateState = sel.select(currentState);
 
 			currentState = (MarsTile) intermediateState.getState();
-			currentWeight = intermediateState.getWeight();
 
 			this.traversed.add(currentState);
 
