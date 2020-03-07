@@ -46,7 +46,6 @@ public class MarsAgent {
 		sel.setEpsilon(epsilon);
 		sel.setGamma(gamma);
 
-		// TODO implement loop and make sure it's correct
 		this.traversed.add(currentState);
 		do {
 
@@ -60,10 +59,6 @@ public class MarsAgent {
 			mapState = this.map.getState(currentState.getPosition()).getWeight();
 			
 		} while (mapState < SUCCESS_STATE && mapState > FAIL_STATE);
-
-		if (!(mapState > FAIL_STATE)) {
-			// sel.select(currentState, currentWeight);
-		}
 
 	}
 
@@ -103,8 +98,7 @@ public class MarsAgent {
 	public String getMemoryMap() {
 
 		StringBuilder build = new StringBuilder();
-		build.append("[");
-
+		
 		for (int y = 0; y < this.map.getHeight(); y++) {
 			for (int x = 0; x < this.map.getWidth(); x++) {
 				build.append(this.selector.getMemoryValue(this.map.getState(x, y)));

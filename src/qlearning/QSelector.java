@@ -2,7 +2,6 @@ package qlearning;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 
 public class QSelector {
 
@@ -59,7 +58,6 @@ public class QSelector {
 			}
 		}
 
-		// all illegal states, or no connecting states
 		if (possibleValues.size() < 1) {
 			return null;
 		}
@@ -76,30 +74,11 @@ public class QSelector {
 			nextState = this.getMaxState(startState);
 
 		}
-		// *
+		
 		double qWeight = this.memory.getWeight(nextState, this.getMaxState(nextState));
-		/*
-		 * / //double calc = this.calculate(qWeight, nextState.getState().getWeight(),
-		 * currentWeight); double calc = this.calculate(qWeight,
-		 * nextState.getState().getWeight(), currentWeight);
-		 * this.memory.setWeight(positionState,this.memory.getWeight(positionState)+calc
-		 * ); //this.memory.setWeight(nextState.getState(), calc); //
-		 */
-
-		/**
-		 * double td_target = nextState.getWeight() + gamma * qWeight; double td_error =
-		 * td_target - this.memory.getWeight(nextState,
-		 * nextState);//q_values[state][action]; this.memory.setWeight(nextState,
-		 * nextState,this.memory.getWeight(nextState, nextState)+ alpha * td_error); /
-		 */
 		double reward = -1;
-		/*if(nextState.getWeight() < 0) {
-			reward = -80000;
-		}*/
 		double calc2 = this.calculate(qWeight, nextState.getWeight()+reward, this.memory.getWeight(startState, nextState));
-		double mem = this.memory.getWeight(startState, nextState);
 		this.memory.setWeight(startState, nextState,calc2);
-		// */
 
 		return new QTuple(nextState, calc2);
 
@@ -137,16 +116,6 @@ public class QSelector {
 		return this.memory.getWeightsOf(state);
 	}
 
-	private double getMaxQValue(QValue state) {
-		double max = Double.NEGATIVE_INFINITY;
-		for (Double value : this.memory.getWeightsOf(state).values()) {
-			if (value > max) {
-				max = value;
-			}
-		}
-		return max;
-	}
-
 	private QValue getMaxState(QValue state) {
 
 		ArrayList<QValue> values = new ArrayList<QValue>();
@@ -169,45 +138,8 @@ public class QSelector {
 		return values.get((int) Math.floor(Math.random() * values.size()));
 	}
 
-	/*
-	 * /// TODO max state value private double calculate(double memoryWeight, double
-	 * mapStateWeight, double currentTravelWeight) { return currentTravelWeight +
-	 * this.alpha * (mapStateWeight + this.gamma * (memoryWeight) -
-	 * currentTravelWeight); //return (1 - this.alpha) * currentTravelWeight +
-	 * this.alpha * (mapStateWeight + this.gamma * memoryWeight); } /
-	 */
-	
-	/**
-	double calculate(double memoryWeight, double mapStateWeight, double currentTravelWeight) {
-		return currentTravelWeight + this.alpha * (mapStateWeight + this.gamma * (memoryWeight) - currentTravelWeight);
-	}
-
-	// private double calculate(double maxOfNext, double mapStateWeightReward,
-	// double stateActionValue) {
-	// return ((1 - this.alpha) * stateActionValue) + (this.alpha *
-	// (mapStateWeightReward + (this.gamma * maxOfNext)));
-	// }
-	
-	/*/
 	private double calculate(double maxOfNext, double mapStateWeightReward, double stateActionValue) {
 		return stateActionValue + alpha * (mapStateWeightReward + gamma * maxOfNext - stateActionValue);
-		//return ((1 - this.alpha) * stateActionValue) + (this.alpha * (mapStateWeightReward + (this.gamma * maxOfNext)));
 	}
-	
-	
-	
-	//*/
-
-	/*
-	 * private double calculate(double maxOfNext, double mapStateWeightReward,
-	 * double travelCost) {
-	 * 
-	 * return travelCost + (this.alpha * (mapStateWeightReward + maxOfNext -
-	 * travelCost));
-	 * 
-	 * }
-	 */
-
-	// */
 
 }

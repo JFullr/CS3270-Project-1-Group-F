@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import utils.FileUtils;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class MarsMap.
  */
