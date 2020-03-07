@@ -2,6 +2,7 @@ package qlearning;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * The Class QSelector.
@@ -16,7 +17,9 @@ public class QSelector {
 	private double alpha;
 	private QMemory memory;
 	private HashMap<QValue, Iterable<QValue>> stateMap;
-
+	
+	private Random rand;
+	
 	/**
 	 * Instantiates a new q selector.
 	 *
@@ -71,6 +74,7 @@ public class QSelector {
 			this.memory = memory;
 		}
 		this.stateMap = stateMap;
+		this.rand = new Random();
 	}
 
 	/**
@@ -93,9 +97,9 @@ public class QSelector {
 		}
 
 		QValue nextState = null;
-		if (Math.random() < this.epsilon) {
+		if (this.rand.nextDouble() < this.epsilon) {
 
-			int tuple = (int) Math.floor(Math.random() * possibleValues.size());
+			int tuple = (int) Math.floor(this.rand.nextDouble() * possibleValues.size());
 
 			nextState = possibleValues.get(tuple);
 
@@ -207,7 +211,7 @@ public class QSelector {
 			}
 		}
 
-		return values.get((int) Math.floor(Math.random() * values.size()));
+		return values.get((int) Math.floor(this.rand.nextDouble() * values.size()));
 	}
 
 	/**
