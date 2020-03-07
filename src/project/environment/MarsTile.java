@@ -6,16 +6,15 @@ import qlearning.QValue;
 
 /**
  * The Class MarsTile.
+ * 
+ * @author Amelia Reynolds, Joseph Fuller, Kyle Riggs, Timothy Brooks
+ * @version Spring 2020
  */
 public class MarsTile implements QValue {
 
-	/** The Constant ILLEGAL_TILE. */
 	public static final MarsTile ILLEGAL_TILE = new MarsTile(null, Double.NEGATIVE_INFINITY);
 
-	/** The weight. */
 	private double weight;
-
-	/** The position. */
 	private Point position;
 
 	/**

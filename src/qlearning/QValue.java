@@ -2,14 +2,40 @@ package qlearning;
 
 import java.awt.Point;
 
+/**
+ * The Interface QValue.
+ * 
+ * @author Amelia Reynolds, Joseph Fuller, Kyle Riggs, Timothy Brooks
+ * @version Spring 2020
+ */
 public interface QValue {
 
-	public Point getPosition();
+	/**
+	 * Gets the position.
+	 *
+	 * @return the position
+	 */
+	Point getPosition();
 
-	public double getWeight();
+	/**
+	 * Gets the weight.
+	 *
+	 * @return the weight
+	 */
+	double getWeight();
 
-	public void setWeight(double weight);
+	/**
+	 * Sets the weight.
+	 *
+	 * @param weight the new weight
+	 */
+	void setWeight(double weight);
 
-	public QValue makeCopy();
+	/**
+	 * Make copy.
+	 *
+	 * @return the q value
+	 */
+	QValue makeCopy();
 
 }

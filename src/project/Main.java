@@ -4,10 +4,21 @@ import java.util.ArrayList;
 
 import qlearning.QValue;
 
+/**
+ * The Class Main.
+ * 
+ * @author Amelia Reynolds, Joseph Fuller, Kyle Riggs, Timothy Brooks
+ * @version Spring 2020
+ */
 public class Main {
 
 	public static final int TRANING_ROUNDS = 10_000;
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 
 		MarsRover rover = new MarsRover("MarsTerrainMap0.csv");

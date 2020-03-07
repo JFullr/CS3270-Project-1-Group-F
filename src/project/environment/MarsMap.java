@@ -7,22 +7,19 @@ import utils.FileUtils;
 
 /**
  * The Class MarsMap.
+ * 
+ * @author Amelia Reynolds, Joseph Fuller, Kyle Riggs, Timothy Brooks
+ * @version Spring 2020
  */
 public class MarsMap {
 
-	/** The Constant UNBALANCED_MAP. */
 	private static final Exception UNBALANCED_MAP = new Exception("Specified Map Size != Found Map Data");
 
-	/** The tiles. */
-	private ArrayList<ArrayList<MarsTile>> tiles;
-
-	/** The map width. */
+	
 	private int mapWidth;
-
-	/** The map height. */
 	private int mapHeight;
 
-	/** The start state. */
+	private ArrayList<ArrayList<MarsTile>> tiles;
 	private MarsTile startState;
 
 	/**
@@ -57,7 +54,7 @@ public class MarsMap {
 	}
 
 	/**
-	 * Gets the start tile.
+	 * Gets the start tile of the agent.
 	 *
 	 * @return the start tile
 	 */
@@ -65,31 +62,32 @@ public class MarsMap {
 		return this.startState;
 	}
 
+	/**
+	 * Gets the state at the given position of type Point.
+	 *
+	 * @param pos the position of type Point
+	 * @return the current state of the agent
+	 */
 	public MarsTile getState(Point pos) {
 		return this.getState(pos.x, pos.y);
 	}
 
 	/**
-	 * Gets the state.
+	 * Gets the state at the given position located at the give points x and y.
 	 *
-	 * @param x the x
-	 * @param y the y
+	 * @param xCoord the x
+	 * @param yCoord the y
 	 * @return the state, MarsTile.ILLEGAL_TILEE if illegal
 	 */
-	public MarsTile getState(int x, int y) {
+	public MarsTile getState(int xCoord, int yCoord) {
 
-		if (x < 0 || x >= this.mapWidth || y < 0 || y >= this.mapHeight) {
+		if (xCoord < 0 || xCoord >= this.mapWidth || yCoord < 0 || yCoord >= this.mapHeight) {
 			return null;
 		}
 
-		return this.tiles.get(y).get(x);
+		return this.tiles.get(yCoord).get(xCoord);
 	}
 
-	/**
-	 * Creates the map from csv.
-	 *
-	 * @param filePath the file path
-	 */
 	private void createMapFromCsv(String filePath) {
 
 		try {
@@ -118,19 +116,12 @@ public class MarsMap {
 		}
 	}
 
-	/**
-	 * Adds the tile.
-	 *
-	 * @param x   the x
-	 * @param y   the y
-	 * @param raw the raw
-	 */
-	private void addTile(int x, int y, String raw) {
-		while (this.tiles.size() <= y) {
+	private void addTile(int xCoord, int yCoord, String raw) {
+		while (this.tiles.size() <= yCoord) {
 			this.tiles.add(new ArrayList<MarsTile>());
 		}
 
-		Point position = new Point(x, y);
+		Point position = new Point(xCoord, yCoord);
 
 		double value = 0;
 
@@ -143,14 +134,19 @@ public class MarsMap {
 			value = Double.parseDouble(raw.trim());
 		}
 
-		this.tiles.get(y).add(new MarsTile(position, value));
+		this.tiles.get(yCoord).add(new MarsTile(position, value));
 
 		if (raw.startsWith("start")) {
-			this.startState = this.getState(x, y);
+			this.startState = this.getState(xCoord, yCoord);
 		}
 
 	}
 
+	/**
+	 * Gets the display map.
+	 *
+	 * @return the display map
+	 */
 	public String getDisplayMap() {
 
 		StringBuilder build = new StringBuilder();
@@ -169,7 +165,7 @@ public class MarsMap {
 	}
 
 	/**
-	 * Gets the dimensions.
+	 * Gets the dimensions from the given raw values.
 	 *
 	 * @param rawValues the raw values
 	 * @return the dimensions
@@ -185,24 +181,18 @@ public class MarsMap {
 		return new Dimension(width, height);
 	}
 
-	/**
-	 * The Class Dimension.
-	 */
 	private class Dimension {
 
-		/** The width. */
 		private int width;
-
-		/** The height. */
 		private int height;
 
 		/**
 		 * Instantiates a new dimension.
 		 *
-		 * @param width  the width
-		 * @param height the height
+		 * @param width  the width for the dimensions
+		 * @param height the height for the dimensions
 		 */
-		public Dimension(int width, int height) {
+		Dimension(int width, int height) {
 			this.width = width;
 			this.height = height;
 		}
