@@ -78,7 +78,7 @@ public class MarsMap {
 	 * 
 	 * @return the internal list
 	 */
-	public ArrayList<ArrayList<MarsTile>> getAllStates(){
+	public ArrayList<ArrayList<MarsTile>> getAllStates() {
 		return this.tiles;
 	}
 
