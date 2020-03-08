@@ -51,17 +51,59 @@ public class Main {
 		
 		/*/
 		
-		MarsRover rover = new MarsRover("MarsTerrainMap1.csv");
-		
-		ArrayList<ArrayList<QValue>> paths = rover.train(TRANING_ROUNDS,0.5,0.9,0);
-		int rounds = 0;
-		for(ArrayList<QValue> path : paths) {
-			rounds++;
-			if(path.size()==20 && path.get(19).getWeight()==100) {
-				break;
+		//*
+			double count = 0;
+			for(int i = 0; i < 100; i++) {
+			MarsRover rover = new MarsRover("MarsTerrainMap1.csv");
+			
+			//83
+			//128
+			ArrayList<ArrayList<QValue>> paths = rover.train(150,0.5,0.9,0.1);
+			int rounds = 0;
+			for(ArrayList<QValue> path : paths) {
+				rounds++;
+				if(path.size()==20 && path.get(19).getWeight()==100) {
+					break;
+				}
 			}
+			System.out.println(rounds);
+			count+=rounds;
+			}
+			System.out.println("AVG: "+count/100);
+		/*/
+		
+		long start = System.currentTimeMillis(), interim = start;
+		long highest = 0;
+		while(System.currentTimeMillis() - start < 60000) {
+			
+			MarsRover rover = new MarsRover("MarsTerrainMap1.csv");
+			//55
+			//109
+			ArrayList<ArrayList<QValue>> paths = rover.train(1150,0.5,0.9,.1);
+			
+			int rounds = 0;
+			for(ArrayList<QValue> path : paths) {
+				rounds++;
+				if(path.size()==20 && path.get(19).getWeight()==100) {
+					break;
+				}
+			}
+			if(rounds >=1150) {
+				System.out.println("CRITICAL END: >= 150");
+				continue;
+			}
+			
+			if(rounds > highest) {
+				highest = rounds;
+			}
+			
+			if(System.currentTimeMillis() - interim > 999) {
+				System.out.println(highest);
+				interim = System.currentTimeMillis();
+			}
+			
 		}
-		System.out.println(rounds);
+		
 		
 		//*/
 		
@@ -81,7 +123,57 @@ public class Main {
 	}
 	
 	private static void question4() {
+		/*
+			double count = 0;
+			for(int i = 0; i < 100; i++) {
+			MarsRover rover = new MarsRover("MarsTerrainMap1.csv");
+			
+			//70
+			ArrayList<ArrayList<QValue>> paths = rover.train(150,0.5,0.9,0);
+			int rounds = 0;
+			for(ArrayList<QValue> path : paths) {
+				rounds++;
+				if(path.size()==20 && path.get(19).getWeight()==100) {
+					break;
+				}
+			}
+			System.out.println(rounds);
+			count+=rounds;
+			}
+			System.out.println("AVG: "+count/100);
+		*/
 		
+		long start = System.currentTimeMillis(), interim = start;
+		long highest = 0;
+		while(System.currentTimeMillis() - start < 60000) {
+			
+			MarsRover rover = new MarsRover("MarsTerrainMap1.csv");
+			//55
+			//109
+			ArrayList<ArrayList<QValue>> paths = rover.train(150,0.5,0.9,0);
+			
+			int rounds = 0;
+			for(ArrayList<QValue> path : paths) {
+				rounds++;
+				if(path.size()==20 && path.get(19).getWeight()==100) {
+					break;
+				}
+			}
+			if(rounds >=150) {
+				System.out.println("CRITICAL END: >= 150");
+				return;
+			}
+			
+			if(rounds > highest) {
+				highest = rounds;
+			}
+			
+			if(System.currentTimeMillis() - interim > 999) {
+				System.out.println(highest);
+				interim = System.currentTimeMillis();
+			}
+			
+		}
 	}
 	
 	private static void question3() {
