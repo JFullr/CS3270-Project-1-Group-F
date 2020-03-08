@@ -11,14 +11,14 @@ import java.util.Random;
  * @version Spring 2020
  */
 public class QSelector {
+	
+	private static final Random RAND = new Random();
 
 	private double epsilon;
 	private double gamma;
 	private double alpha;
 	private QMemory memory;
 	private HashMap<QValue, Iterable<QValue>> stateMap;
-	
-	private Random rand;
 	
 	/**
 	 * Instantiates a new q selector.
@@ -74,7 +74,6 @@ public class QSelector {
 			this.memory = memory;
 		}
 		this.stateMap = stateMap;
-		this.rand = new Random();
 	}
 
 	/**
@@ -97,9 +96,9 @@ public class QSelector {
 		}
 
 		QValue nextState = null;
-		if (this.rand.nextDouble() < this.epsilon) {
+		if (RAND.nextDouble() < this.epsilon) {
 
-			int tuple = (int) Math.floor(this.rand.nextDouble() * possibleValues.size());
+			int tuple = (int) Math.floor(RAND.nextDouble() * possibleValues.size());
 
 			nextState = possibleValues.get(tuple);
 
@@ -211,7 +210,7 @@ public class QSelector {
 			}
 		}
 
-		return values.get((int) Math.floor(this.rand.nextDouble() * values.size()));
+		return values.get((int) Math.floor(RAND.nextDouble() * values.size()));
 	}
 
 	/**

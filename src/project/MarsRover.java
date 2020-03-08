@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import project.agent.MarsAgent;
 import project.environment.MarsMap;
-import project.environment.MarsTile;
 import qlearning.QValue;
 
 /**
@@ -51,8 +50,8 @@ public class MarsRover {
 		this.agent.printQLearnedWeights();
 	}
 	
-	public Double getQValue(MarsTile start, MarsTile next) {
-		return null;
+	public Double getQValue(QValue start, QValue next) {
+		return this.agent.getQValue(start, next);
 	}
 
 	/**
@@ -84,11 +83,7 @@ public class MarsRover {
 		return paths;
 
 	}
-
-	private void traverse(double alpha, double gamma, double epsilon) {
-		this.agent.traverse(epsilon, gamma, alpha);
-	}
-
+	
 	/**
 	 * Gets the learned memory of the agent.
 	 *
@@ -105,6 +100,10 @@ public class MarsRover {
 	 */
 	public String getTrainingMap() {
 		return this.map.getDisplayMap();
+	}
+	
+	private void traverse(double alpha, double gamma, double epsilon) {
+		this.agent.traverse(epsilon, gamma, alpha);
 	}
 
 }
