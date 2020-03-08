@@ -26,12 +26,9 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		
-		/*
 		MarsRover rover = new MarsRover("MarsTerrainMap1.csv");
 		ArrayList<ArrayList<QValue>> paths = rover.train(TRANING_ROUNDS);
 		
-		rover.printQTable();
-
 		System.out.println("Training Map:");
 		System.out.println(rover.getTrainingMap() + System.lineSeparator());
 
@@ -49,76 +46,31 @@ public class Main {
 			}
 		}
 		
-		/*/
+		rover.printQTable();
 		
-		//*
-			double count = 0;
-			for(int i = 0; i < 100; i++) {
-			MarsRover rover = new MarsRover("MarsTerrainMap1.csv");
-			
-			//83
-			//128
-			ArrayList<ArrayList<QValue>> paths = rover.train(150,0.5,0.9,0.1);
-			int rounds = 0;
-			for(ArrayList<QValue> path : paths) {
-				rounds++;
-				if(path.size()==20 && path.get(19).getWeight()==100) {
-					break;
-				}
-			}
-			System.out.println(rounds);
-			count+=rounds;
-			}
-			System.out.println("AVG: "+count/100);
-		/*/
+
+	}
+	
+	private static void question5() {
 		
-		long start = System.currentTimeMillis(), interim = start;
-		long highest = 0;
-		while(System.currentTimeMillis() - start < 60000) {
-			
-			MarsRover rover = new MarsRover("MarsTerrainMap1.csv");
-			//55
-			//109
-			ArrayList<ArrayList<QValue>> paths = rover.train(1150,0.5,0.9,.1);
-			
-			int rounds = 0;
-			for(ArrayList<QValue> path : paths) {
-				rounds++;
-				if(path.size()==20 && path.get(19).getWeight()==100) {
-					break;
-				}
+		double count = 0;
+		for(int i = 0; i < 100; i++) {
+		MarsRover rover = new MarsRover("MarsTerrainMap1.csv");
+		
+		//83
+		//128
+		ArrayList<ArrayList<QValue>> paths = rover.train(150,0.5,0.9,0.1);
+		int rounds = 0;
+		for(ArrayList<QValue> path : paths) {
+			rounds++;
+			if(path.size()==20 && path.get(19).getWeight()==100) {
+				break;
 			}
-			if(rounds >=1150) {
-				System.out.println("CRITICAL END: >= 150");
-				continue;
-			}
-			
-			if(rounds > highest) {
-				highest = rounds;
-			}
-			
-			if(System.currentTimeMillis() - interim > 999) {
-				System.out.println(highest);
-				interim = System.currentTimeMillis();
-			}
-			
 		}
-		
-		
-		//*/
-		
-		
-		/*
-		try {
-			ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream(new File("training.save")));
-			o.writeObject(paths);
-			o.flush();
-			o.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}*/
+		System.out.println(rounds);
+		count+=rounds;
+		}
+		System.out.println("AVG: "+count/100);
 
 	}
 	
