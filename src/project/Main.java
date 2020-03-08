@@ -1,5 +1,10 @@
 package project;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import qlearning.QValue;
@@ -20,7 +25,8 @@ public class Main {
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
-
+		
+		/*
 		MarsRover rover = new MarsRover("MarsTerrainMap1.csv");
 		ArrayList<ArrayList<QValue>> paths = rover.train(TRANING_ROUNDS);
 		
@@ -43,7 +49,30 @@ public class Main {
 			}
 		}
 		
+		/*/
 		
+		MarsRover rover = new MarsRover("MarsTerrainMap1.csv");
+		ArrayList<ArrayList<QValue>> paths = rover.train(TRANING_ROUNDS);
+		
+		rover.printQTable();
+		
+		System.out.println("\n\n");
+		System.out.println(paths.get(0));
+		
+		//*/
+		
+		
+		/*
+		try {
+			ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream(new File("training.save")));
+			o.writeObject(paths);
+			o.flush();
+			o.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}*/
 
 	}
 

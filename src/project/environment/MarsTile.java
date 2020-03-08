@@ -1,6 +1,7 @@
 package project.environment;
 
 import java.awt.Point;
+import java.io.Serializable;
 
 import qlearning.QValue;
 
@@ -10,7 +11,9 @@ import qlearning.QValue;
  * @author Amelia Reynolds, Joseph Fuller, Kyle Riggs, Timothy Brooks
  * @version Spring 2020
  */
-public class MarsTile implements QValue {
+public class MarsTile implements QValue, Serializable {
+	
+	private static final long serialVersionUID = -2641639040183503700L;
 
 	public static final MarsTile ILLEGAL_TILE = new MarsTile(null, Double.NEGATIVE_INFINITY);
 

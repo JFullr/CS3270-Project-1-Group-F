@@ -180,6 +180,24 @@ public class MarsAgent {
 
 		return build.toString();
 	}
+	
+	public Double getQValue(QValue start, QValue nextValue) {
+		return this.selector.getMemoryValue(start).get(nextValue);
+	}
+	
+	public void printQLearnedWeights() {
+		for (int x = 0; x < this.map.getWidth(); x++) {
+			for (int y = 0; y < this.map.getHeight(); y++) {
+				MarsTile state = this.map.getState(x, y);
+				System.out.println("-------------------------------");
+				System.out.println(state);
+				this.printQHelper("N",state,this.getNorthState(state));
+				this.printQHelper("S",state,this.getSouthState(state));
+				this.printQHelper("E",state,this.getEastState(state));
+				this.printQHelper("W",state,this.getWestState(state));
+			}
+		}
+	}
 
 	private HashMap<QValue, Iterable<QValue>> initStateMap() {
 
@@ -199,20 +217,6 @@ public class MarsAgent {
 	
 	private MarsTile getStartingLocation() {
 		return this.map.getStartTile();
-	}
-
-	public void printQLearnedWeights() {
-		for (int x = 0; x < this.map.getWidth(); x++) {
-			for (int y = 0; y < this.map.getHeight(); y++) {
-				MarsTile state = this.map.getState(x, y);
-				System.out.println("-------------------------------");
-				System.out.println(state);
-				this.printQHelper("N",state,this.getNorthState(state));
-				this.printQHelper("S",state,this.getSouthState(state));
-				this.printQHelper("E",state,this.getEastState(state));
-				this.printQHelper("W",state,this.getWestState(state));
-			}
-		}
 	}
 	
 	private void printQHelper(String prefix, QValue start, QValue nextValue) {

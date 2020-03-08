@@ -50,6 +50,10 @@ public class MarsRover {
 	public void printQTable() {
 		this.agent.printQLearnedWeights();
 	}
+	
+	public Double getQValue(MarsTile start, MarsTile next) {
+		return null;
+	}
 
 	/**
 	 * Trains the agent with the given rounds, alpha value, gamma value, and epsilon value.
