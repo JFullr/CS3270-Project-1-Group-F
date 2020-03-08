@@ -22,11 +22,10 @@ public class MarsAgent {
 
 	private static final double FAIL_STATE = -50;
 	private static final double SUCCESS_STATE = 100;
-	private ArrayList<MarsTile> traversed;
 	
+	private ArrayList<MarsTile> traversed;
 	private MarsMap map;
 	private QSelector selector;
-	
 	private HashMap<QValue, Iterable<QValue>> validStates;
 
 	/**
@@ -54,8 +53,8 @@ public class MarsAgent {
 	 * Traverse the given map with the qlearning selector.
 	 *
 	 * @param epsilon the epsilon
-	 * @param gamma the gamma
-	 * @param alpha the alpha
+	 * @param gamma   the gamma
+	 * @param alpha   the alpha
 	 */
 	public void traverse(double epsilon, double gamma, double alpha) {
 
@@ -82,7 +81,7 @@ public class MarsAgent {
 		} while (mapState < SUCCESS_STATE && mapState > FAIL_STATE);
 
 	}
-	
+
 	/**
 	 * Gets the epsilon.
 	 *
@@ -201,26 +200,29 @@ public class MarsAgent {
 		return this.map.getStartTile();
 	}
 
+	/**
+	 * Prints the Q learned weights.
+	 */
 	public void printQLearnedWeights() {
 		for (int x = 0; x < this.map.getWidth(); x++) {
 			for (int y = 0; y < this.map.getHeight(); y++) {
 				MarsTile state = this.map.getState(x, y);
 				System.out.println("-------------------------------");
 				System.out.println(state);
-				this.printQHelper("N",state,this.getNorthState(state));
-				this.printQHelper("S",state,this.getSouthState(state));
-				this.printQHelper("E",state,this.getEastState(state));
-				this.printQHelper("W",state,this.getWestState(state));
+				this.printQHelper("N", state, this.getNorthState(state));
+				this.printQHelper("S", state, this.getSouthState(state));
+				this.printQHelper("E", state, this.getEastState(state));
+				this.printQHelper("W", state, this.getWestState(state));
 			}
 		}
 	}
-	
+
 	private void printQHelper(String prefix, QValue start, QValue nextValue) {
-		if(nextValue == null) {
-			System.out.println(prefix+": DOES_NOT_EXIST");
+		if (nextValue == null) {
+			System.out.println(prefix + ": DOES_NOT_EXIST");
 		} else {
-			System.out.println(prefix+": "+this.selector.getMemoryValue(start).get(nextValue));
+			System.out.println(prefix + ": " + this.selector.getMemoryValue(start).get(nextValue));
 		}
 	}
-	
+
 }
