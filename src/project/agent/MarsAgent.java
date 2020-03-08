@@ -22,7 +22,7 @@ public class MarsAgent {
 
 	private static final double FAIL_STATE = -50;
 	private static final double SUCCESS_STATE = 100;
-	
+
 	private ArrayList<MarsTile> traversed;
 	private MarsMap map;
 	private QSelector selector;
@@ -31,7 +31,8 @@ public class MarsAgent {
 	/**
 	 * Instantiates a new mars agent.
 	 *
-	 * @param map the map
+	 * @param map
+	 *            the map
 	 */
 	public MarsAgent(MarsMap map) {
 		this.traversed = new ArrayList<MarsTile>();
@@ -52,9 +53,12 @@ public class MarsAgent {
 	/**
 	 * Traverse the given map with the qlearning selector.
 	 *
-	 * @param epsilon the epsilon
-	 * @param gamma   the gamma
-	 * @param alpha   the alpha
+	 * @param epsilon
+	 *            the epsilon
+	 * @param gamma
+	 *            the gamma
+	 * @param alpha
+	 *            the alpha
 	 */
 	public void traverse(double epsilon, double gamma, double alpha) {
 
@@ -94,7 +98,8 @@ public class MarsAgent {
 	/**
 	 * Sets the epsilon.
 	 *
-	 * @param value the new epsilon
+	 * @param value
+	 *            the new epsilon
 	 */
 	public void setEpsilon(double value) {
 		this.selector.setEpsilon(value);
@@ -103,7 +108,8 @@ public class MarsAgent {
 	/**
 	 * Gets the neighbor states.
 	 *
-	 * @param tile the tile
+	 * @param tile
+	 *            the tile
 	 * @return the neighbor states
 	 */
 	public MarsTile[] getNeighborStates(MarsTile tile) {
@@ -114,7 +120,8 @@ public class MarsAgent {
 	/**
 	 * Gets the north state.
 	 *
-	 * @param tile the tile
+	 * @param tile
+	 *            the tile
 	 * @return the north state
 	 */
 	public MarsTile getNorthState(MarsTile tile) {
@@ -125,7 +132,8 @@ public class MarsAgent {
 	/**
 	 * Gets the south state.
 	 *
-	 * @param tile the tile
+	 * @param tile
+	 *            the tile
 	 * @return the south state
 	 */
 	public MarsTile getSouthState(MarsTile tile) {
@@ -136,7 +144,8 @@ public class MarsAgent {
 	/**
 	 * Gets the east state.
 	 *
-	 * @param tile the tile
+	 * @param tile
+	 *            the tile
 	 * @return the east state
 	 */
 	public MarsTile getEastState(MarsTile tile) {
@@ -147,7 +156,8 @@ public class MarsAgent {
 	/**
 	 * Gets the west state.
 	 *
-	 * @param tile the tile
+	 * @param tile
+	 *            the tile
 	 * @return the west state
 	 */
 	public MarsTile getWestState(MarsTile tile) {
@@ -179,7 +189,7 @@ public class MarsAgent {
 
 		return build.toString();
 	}
-	
+
 	/**
 	 * Prints the Q learned weights.
 	 */
@@ -196,7 +206,16 @@ public class MarsAgent {
 			}
 		}
 	}
-	
+
+	/**
+	 * Gets the q value.
+	 *
+	 * @param start
+	 *            the starting state
+	 * @param nextValue
+	 *            the value the starting state will go into
+	 * @return the q value associated with the state action pair
+	 */
 	public Double getQValue(QValue start, QValue nextValue) {
 		return this.selector.getMemoryValue(start).get(nextValue);
 	}
@@ -216,7 +235,7 @@ public class MarsAgent {
 		return stateMap;
 
 	}
-	
+
 	private MarsTile getStartingLocation() {
 		return this.map.getStartTile();
 	}

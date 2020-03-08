@@ -50,6 +50,13 @@ public class MarsRover {
 		this.agent.printQLearnedWeights();
 	}
 	
+	/**
+	 * Gets the q value.
+	 *
+	 * @param start the starting state
+	 * @param next the value the starting state will go into
+	 * @return the q value associated with the state action pair
+	 */
 	public Double getQValue(QValue start, QValue next) {
 		return this.agent.getQValue(start, next);
 	}
