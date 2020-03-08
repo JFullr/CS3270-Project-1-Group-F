@@ -63,7 +63,7 @@ public class MarsRover {
 
 		ArrayList<ArrayList<QValue>> paths = new ArrayList<ArrayList<QValue>>();
 
-		double decrement = this.agent.getEpsilon() / rounds;
+		//double decrement = this.agent.getEpsilon() / rounds;
 
 		for (int i = 0; i < rounds; i++) {
 
@@ -73,10 +73,7 @@ public class MarsRover {
 			newPath.addAll(this.agent.getPath());
 			paths.add(newPath);
 
-			this.agent.setEpsilon(this.agent.getEpsilon() - decrement);
-			if (i + 2 >= rounds) {
-				this.agent.setEpsilon(0);
-			}
+			//this.agent.setEpsilon(this.agent.getEpsilon() - decrement);
 		}
 
 		return paths;
