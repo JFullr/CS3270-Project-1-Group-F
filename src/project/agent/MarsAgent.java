@@ -61,7 +61,7 @@ public class MarsAgent {
 
 		this.traversed.clear();
 
-		MarsTile currentState = this.map.getStartTile();
+		MarsTile currentState = this.getStartingLocation();
 		double mapState = 0;
 		QSelector sel = this.selector.makeCopy();
 		sel.setAlpha(alpha);
@@ -82,7 +82,7 @@ public class MarsAgent {
 		} while (mapState < SUCCESS_STATE && mapState > FAIL_STATE);
 
 	}
-
+	
 	/**
 	 * Gets the epsilon.
 	 *
@@ -196,5 +196,31 @@ public class MarsAgent {
 		return stateMap;
 
 	}
+	
+	private MarsTile getStartingLocation() {
+		return this.map.getStartTile();
+	}
 
+	public void printQLearnedWeights() {
+		for (int x = 0; x < this.map.getWidth(); x++) {
+			for (int y = 0; y < this.map.getHeight(); y++) {
+				MarsTile state = this.map.getState(x, y);
+				System.out.println("-------------------------------");
+				System.out.println(state);
+				this.printQHelper("N",state,this.getNorthState(state));
+				this.printQHelper("S",state,this.getSouthState(state));
+				this.printQHelper("E",state,this.getEastState(state));
+				this.printQHelper("W",state,this.getWestState(state));
+			}
+		}
+	}
+	
+	private void printQHelper(String prefix, QValue start, QValue nextValue) {
+		if(nextValue == null) {
+			System.out.println(prefix+": DOES_NOT_EXIST");
+		} else {
+			System.out.println(prefix+": "+this.selector.getMemoryValue(start).get(nextValue));
+		}
+	}
+	
 }

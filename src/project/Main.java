@@ -21,7 +21,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 
-		MarsRover rover = new MarsRover("MarsTerrainMap0.csv");
+		MarsRover rover = new MarsRover("MarsTerrainMap1.csv");
 		ArrayList<ArrayList<QValue>> paths = rover.train(TRANING_ROUNDS);
 
 		System.out.println("Training Map:");
@@ -40,6 +40,8 @@ public class Main {
 				System.out.println(paths.get(i));
 			}
 		}
+		
+		rover.printQTable();
 
 	}
 

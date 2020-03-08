@@ -71,6 +71,16 @@ public class MarsMap {
 	public MarsTile getState(Point pos) {
 		return this.getState(pos.x, pos.y);
 	}
+	
+	
+	/**
+	 * Gets the list of all available states.
+	 * 
+	 * @return the internal list
+	 */
+	public ArrayList<ArrayList<MarsTile>> getAllStates(){
+		return this.tiles;
+	}
 
 	/**
 	 * Gets the state at the given position located at the give points x and y.

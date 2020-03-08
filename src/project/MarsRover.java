@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import project.agent.MarsAgent;
 import project.environment.MarsMap;
+import project.environment.MarsTile;
 import qlearning.QValue;
 
 /**
@@ -41,6 +42,13 @@ public class MarsRover {
 	 */
 	public ArrayList<ArrayList<QValue>> train(int rounds) {
 		return this.train(rounds, DEFAULT_ALPHA, DEFAULT_GAMMA, DEFAULT_EPSILON);
+	}
+	
+	/**
+	 * Prints the QTable
+	 */
+	public void printQTable() {
+		this.agent.printQLearnedWeights();
 	}
 
 	/**
